@@ -4,12 +4,11 @@
 function worklog() {
     # Get the parameters
     ORGANIZATION="$1"
-    SKILL="$2"
-    LOG="$3"
+    LOG="$2"
 
     # Get today's date and time
     DATE=$(date +%F)
-    TIME=$(date +%c)
+    TIME=$(date +"%H:%M:%S")
 
     # Define the directory
     LOGDIR="$HOME/.worklog"
@@ -22,7 +21,7 @@ function worklog() {
     fi
 
     # Write the log to the file for today, tab seperated
-    echo -e "${TIME}\t${ORGANIZATION}\t${SKILL}\t\"${LOG}\"" >> \
+    echo -e "${DATE} ${TIME}\t${ORGANIZATION}\t\"${LOG}\"" >> \
         "${LOGDIR}/${DATE}.tsv"
 
     echo "Logged!"
