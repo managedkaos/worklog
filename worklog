@@ -1,0 +1,41 @@
+#!/bin/bash
+# vim: set filetype=sh :
+
+function worklog() {
+    # Get the parameters
+    ORGANIZATION="$1"
+    SKILL="$2"
+    LOG="$3"
+
+    # Get today's date and time
+    DATE=$(date +%F)
+    TIME=$(date +%c)
+
+    # Define the directory
+    LOGDIR="$HOME/.worklog"
+
+    # Make sure the directory exists...
+    if [ ! -d "${LOGDIR}" ]
+    then
+        # ...and create it if it dosen't
+        mkdir -p "${LOGDIR}";
+    fi
+
+    # Write the log to the file for today, tab seperated
+    echo -e "${TIME}\t${ORGANIZATION}\t${SKILL}\t\"${LOG}\"" >> \
+        "${LOGDIR}/${DATE}.tsv"
+
+    echo "Logged!"
+}
+
+function reportlog() {
+    # Define the directory
+    LOGDIR="$HOME/.worklog"
+
+	if (( $# != 1 ))
+    then
+    	/bin/cat "${LOGDIR}"/*.tsv | /usr/bin/grep -i "$1" | /usr/bin/grep -i "$2";
+    else
+		/bin/cat "${LOGDIR}"/*.tsv | /usr/bin/grep -i "$@";
+    fi
+}
